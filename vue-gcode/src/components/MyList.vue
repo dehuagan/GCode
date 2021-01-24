@@ -1,88 +1,87 @@
 <template>
-  <a-list>
-    <RecycleScroller
-      v-infinite-scroll="handleInfiniteOnLoad"
-      style="height: 400px"
-      :items="data"
-      :item-size="73"
-      key-field="email"
-      :infinite-scroll-disabled="busy"
-      :infinite-scroll-distance="10"
-    >
-      <a-list-item slot-scope="{ item }">
-        <a-list-item-meta :description="item.email">
-          <a slot="title" :href="item.href">{{ item.name.last }}</a>
-          <a-avatar
-            slot="avatar"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          />
-        </a-list-item-meta>
-        <div>Content {{ item.index }}</div>
-      </a-list-item>
-    </RecycleScroller>
-    <a-spin v-if="loading" class="demo-loading" />
-  </a-list>
+  <a-table
+    :columns="columns"
+    :row-key="record => record.login.uuid"
+    :data-source="data"
+    :pagination="pagination"
+    :loading="loading"
+    @change="handleTableChange"
+  >
+    <template slot="name" slot-scope="name"> <router-link to="/problems/problemdetail"> {{ name.first }} {{ name.last }} </router-link></template>
+  </a-table>
 </template>
-
 <script>
 import reqwest from 'reqwest';
-import infiniteScroll from 'vue-infinite-scroll';
-import { RecycleScroller } from 'vue-virtual-scroller';
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
-const fakeDataUrl = 'https://randomuser.me/api/?results=10&inc=name,gender,email,nat&noinfo';
-export default {
-  name: "MyList",
-  directives: { infiniteScroll },
-  components: {
-    RecycleScroller,
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    sorter: true,
+    width: '20%',
+    scopedSlots: { customRender: 'name' },
   },
+  {
+    title: 'Gender',
+    dataIndex: 'gender',
+    filters: [
+      { text: 'Male', value: 'male' },
+      { text: 'Female', value: 'female' },
+    ],
+    width: '20%',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+  },
+];
+
+export default {
   data() {
     return {
       data: [],
+      pagination: {},
       loading: false,
-      busy: false,
+      columns,
     };
   },
-  beforeMount() {
-    this.fetchData(res => {
-      this.data = res.results.map((item, index) => ({ ...item, index }));
-    });
+  mounted() {
+    this.fetch();
   },
   methods: {
-    fetchData(callback) {
-      reqwest({
-        url: fakeDataUrl,
-        type: 'json',
-        method: 'get',
-        contentType: 'application/json',
-        success: res => {
-          callback(res);
-        },
+    handleTableChange(pagination, filters, sorter) {
+      console.log(pagination);
+      const pager = { ...this.pagination };
+      pager.current = pagination.current;
+      this.pagination = pager;
+      this.fetch({
+        results: pagination.pageSize,
+        page: pagination.current,
+        sortField: sorter.field,
+        sortOrder: sorter.order,
+        ...filters,
       });
     },
-    handleInfiniteOnLoad() {
-      const data = this.data;
+    fetch(params = {}) {
+      console.log('params:', params);
       this.loading = true;
-      if (data.length > 100) {
-        this.$message.warning('Infinite List loaded all');
-        this.busy = true;
+      reqwest({
+        url: 'https://randomuser.me/api',
+        method: 'get',
+        data: {
+          results: 10,
+          ...params,
+        },
+        type: 'json',
+      }).then(data => {
+        const pagination = { ...this.pagination };
+        // Read total count from server
+        // pagination.total = data.totalCount;
+        pagination.total = 200;
         this.loading = false;
-        return;
-      }
-      this.fetchData(res => {
-        this.data = data.concat(res.results).map((item, index) => ({ ...item, index }));
-        this.loading = false;
+        this.data = data.results;
+        this.pagination = pagination;
       });
     },
   },
 };
 </script>
-
-<style scoped>
-.demo-loading {
-  position: absolute;
-  bottom: 40px;
-  width: 100%;
-  text-align: center;
-}
-</style>

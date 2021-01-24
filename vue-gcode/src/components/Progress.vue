@@ -1,5 +1,5 @@
 <template>
-
+  <div class="progress">
   <a-card hoverable style="width: 100%; border-radius: 30px;" :headStyle="headStyle" title="Your Progress">
     <a-progress type="circle" :percent="75" :width="100" strokeColor="green"/>
     <a-divider />
@@ -14,7 +14,7 @@
       </a-col>
     </a-row>
   </a-card>
-
+  </div>
 </template>
 
 <script>
@@ -29,6 +29,9 @@ export default {
 </script>
 
 <style scoped>
+.progress{
+  text-align: center;
+}
 .ant-card-actions{
   border-radius: 30px;
 }

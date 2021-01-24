@@ -1,23 +1,24 @@
 <template>
 
-  <div>
+  <div style="width: 1000px; margin-left: auto;margin-right: auto">
     <a-layout-content style="padding: 0 50px">
       <a-layout style="padding: 24px 0; background: #fff">
         <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
           <div class="problem-category">
           <a-space :size="space_size">
-            <a-button :size="size" shape="round" style="background-color:#359dc7; border-color: #359dc7; color: white">30/100 Solved</a-button>
-            <a-button :size="size" type="primary" shape="round">easy 30</a-button>
-            <a-button :size="size"  shape="round" style="background-color: orange;border-color: orange; color: white">medium 40</a-button>
-            <a-button :size="size" type="danger" shape="round">hard 30</a-button>
+            <a-tag color="#359dc7">30/100 Solved</a-tag>
+            <a-tag color="#1DA57A">easy 30</a-tag>
+            <a-tag color="#f98b15">medium 40</a-tag>
+            <a-tag color="#f5222d">hard 30</a-tag>
           </a-space>
-            <a-button :size="random" style="margin-left: 300px" >Pick One </a-button>
           </div>
           <a-divider />
           <a-row>
-            <a-col :span="12"><a-input-search placeholder="input search" loading /></a-col>
-            <a-col :span="3"></a-col>
-            <a-col :span="3">
+            <a-col :span="9"><a-input-search placeholder="input search" loading /></a-col>
+            <a-col :span="1"></a-col>
+            <a-col :span="3"><a-button :size="size" >Pick One </a-button></a-col>
+            <a-col :span="1"></a-col>
+            <a-col :span="4">
               <a-dropdown>
               <a class="ant-dropdown-link" @click="e => e.preventDefault()" >
                 Difficulty <a-icon type="down" />
@@ -72,13 +73,13 @@
           <div style="height: 15px;"></div>
           <div class="tags">
           <template v-for="(tag) in tags">
-            <a-tag :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">{{tag}}</a-tag>
+            <a-tag :key="tag" :closable="index !== 0" @close="() => handleClose(tag)" color="#1DA57A">{{tag}}</a-tag>
           </template>
           </div>
           <a-divider />
         <MyList></MyList>
         </a-layout-content>
-        <a-layout-sider width="300" style="background: #fff;">
+        <a-layout-sider width="250" style="background: #fff;">
           <Progress></Progress>
 
         </a-layout-sider>
@@ -105,7 +106,7 @@ export default {
       tags: [],
       size: 'small',
       space_size: 'middle',
-      random: 'normal'
+      // random: 'normal'
     };
   },
   methods: {
@@ -141,7 +142,8 @@ export default {
       window.console.log(e);
       if(this.status.length !== 0){
         this.status.pop();
-        this.tags[1] = e.key;
+        this.tags.splice(1,1);
+        this.tags.splice(1,0,e.key);
       } else{
         this.addTag(e.key);
       }
@@ -152,7 +154,8 @@ export default {
       window.console.log(e);
       if(this.problem_tags.length !== 0){
         this.problem_tags.pop();
-        this.tags[2] = e.key;
+        this.tags.splice(2,1);
+        this.tags.splice(2,0,e.key);
       } else{
         this.addTag(e.key);
       }

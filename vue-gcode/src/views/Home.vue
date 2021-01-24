@@ -1,9 +1,9 @@
 <template>
   <div class="home">
     <Header></Header>
-    <a-layout id="components-layout-demo-top-side">
+<!--    <a-layout id="components-layout-demo-top-side">-->
     <router-view></router-view>
-    </a-layout>
+<!--    </a-layout>-->
     <Footer></Footer>
   </div>
 </template>
