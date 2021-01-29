@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gcode.com.mapper.UserMapper">
+
+    <resultMap id="UserResultMap"
+               type="gcode.com.model.User">
+        <id property="uid" column="uid" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="problem_count" column="problem_count"/>
+    </resultMap>
+
+    <insert id="createUser" parameterType="gcode.com.model.User" flushCache="true" keyProperty="uid" keyColumn="uid" useGeneratedKeys="true">
+        insert into user(username, password, email, problem_count)
+        values (#{username}, #{password}, #{email}, #{problem_count})
+    </insert>
+
+    <select id="getUserByUsername" parameterType="String" resultMap="UserResultMap" useCache="true">
+        select *
+        from user
+        where username = #{username}
+    </select>
+</mapper>
