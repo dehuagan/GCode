@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
     int createUser(User user);
     User getUserByUsername(String name);
+    User getUserByUid(long uid);
 //    int updateUser(User user);
 //    int deleteUser(User user);
 //    User getUserByUid(long uid);

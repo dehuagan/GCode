@@ -9,7 +9,7 @@
     <a-form-item>
       <a-input allow-clear
         v-decorator="[
-          'userName',
+          'username',
           { rules: [{ required: true, message: 'Please input your username!' }] },
         ]"
         placeholder="Username"
@@ -28,22 +28,9 @@
       >
         <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
       </a-input>
+
     </a-form-item>
     <a-form-item>
-      <a-checkbox
-        v-decorator="[
-          'remember',
-          {
-            valuePropName: 'checked',
-            initialValue: true,
-          },
-        ]"
-      >
-        Remember me
-      </a-checkbox>
-      <a class="login-form-forgot" href="">
-        Forgot password
-      </a>
       <a-button type="primary" html-type="submit" class="login-form-button">
         Log in
       </a-button>
@@ -51,12 +38,18 @@
       <router-link to="/register">
         register now!
       </router-link>
+      <a class="login-form-forgot" href="">
+        Forgot password
+      </a>
+
+
     </a-form-item>
   </a-form>
 </template>
 
 <script>
 import logo from "../assets/logo.png";
+import Qs from 'qs'
 export default {
   data(){
     return{
@@ -69,13 +62,35 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault();
-      this.form.validateFields((err, values) => {
+      window.console.log("click login btn "+e.username);
+      this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          var _this = this;
+          this.postRequest('/login',{
+            username: values.username,
+            password: this.$md5(values.password),
+
+          }).then(resp=>{
+            window.console.log("yes");
+            _this.loading = false;
+            if(resp && resp.status == 200){
+              window.console.log("login --> username " + resp.data.obj.username);
+              // window.sessionStorage.setItem('user', resp.data.obj.username);
+              window.sessionStorage.setItem('token', resp.data.obj);
+              _this.$store.commit('login',resp.data.obj);
+              _this.$router.replace({path: '/'});
+              // var data = resp.data;
+              // _this.$store.commit('login',data.obj);
+
+            }
+          });
+          window.console.log('Received values of form: ', values.password);
         }
       });
     },
-  },
+  }
+
+
 };
 </script>
 <style scoped>

@@ -78,7 +78,13 @@
       />
     </a-form-item>
     <a-form-item v-bind="tailFormItemLayout">
-      <a-checkbox v-decorator="['agreement', { valuePropName: 'checked' }]">
+      <a-checkbox v-decorator="['agreement', { valuePropName: 'checked',
+       rules: [
+              {
+                required: true,
+                message: 'Please confirm your agreement!',
+              }
+            ],}]">
         I have read the
         <a href="">
           agreement
@@ -182,10 +188,17 @@ export default {
           var _this = this;
           this.postRequest('/register',{
             username: values.username,
-            password: values.password,
+            password: this.$md5(values.password),
             email: values.email
           }).then(resp=>{
             window.console.log("yes");
+            _this.loading = false;
+            if(resp && resp.status == 200){
+              _this.$router.replace({path: '/login'});
+              // var data = resp.data;
+              // _this.$store.commit('login',data.obj);
+
+            }
           });
           window.console.log('Received values of form: ', values.password);
         }

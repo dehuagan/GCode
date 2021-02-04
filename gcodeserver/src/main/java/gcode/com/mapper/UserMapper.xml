@@ -21,4 +21,10 @@
         from user
         where username = #{username}
     </select>
+
+    <select id="getUserByUid" parameterType="long" resultMap="UserResultMap" useCache="true">
+        select *
+        from user
+        where uid = #{uid}
+    </select>
 </mapper>

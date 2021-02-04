@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Qs from 'qs'
+import router from "@/router";
 // import {Message} from 'element-ui';
 // import router from '../router'
 // import {mymessage} from '@/utils/mymessage';
@@ -67,7 +68,7 @@ export const putRequest = (url, params) => {
     url: `${base}${url}`,
     data: params,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       // 'Accept': 'application/json'
     }
   });
@@ -76,7 +77,11 @@ export const getRequest = (url, params) => {
   return axios({
     method: 'get',
     url: `${base}${url}`,
-    params: params
+    params: params,
+    headers:{
+      'token': window.sessionStorage.getItem("token"),
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
   });
 };
 export const deleteRequest = (url, params) => {
@@ -86,3 +91,38 @@ export const deleteRequest = (url, params) => {
     params: params
   });
 };
+
+// axios.interceptors.request.use(
+//   function(config){
+//     if(!window.sessionStorage.getItem('token')){
+//       router.replace({
+//         path: '/login',
+//         query: {redirect:router.currentRoute.fullPath}
+//       })
+//     }else {
+//       window.console.log(window.sessionStorage.getItem('token'))
+//       config.headers.Authorization = window.sessionStorage.getItem('token')
+//     }
+//     return config;
+//   },function(error){
+//     return Promise.reject(error);
+//   }
+// )
+axios.interceptors.response.use(
+  function (response) {
+    return response
+  },
+  function (error) {
+    if (error.response) {
+      if (error.response.status == 401) {
+        sessionStorage.removeItem('token')
+        router.replace({
+          href: '/login',
+          // query: {redirect: router.currentRoute.fullPath}
+        })
+      } else {
+        next()
+      }
+      return Promise.reject(error.response.data)  // 返回接口返回的错误信息
+    }
+  })

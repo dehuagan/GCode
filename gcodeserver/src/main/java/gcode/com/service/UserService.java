@@ -15,4 +15,7 @@ public class UserService {
     public User getUserByUsername(String username){
         return userMapper.getUserByUsername(username);
     }
+    public User getUserByUid(long uid){
+        return userMapper.getUserByUid(uid);
+    }
 }

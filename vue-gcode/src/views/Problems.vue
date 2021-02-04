@@ -109,7 +109,23 @@ export default {
       // random: 'normal'
     };
   },
+  mounted() {
+    this.loadProblemsView();
+  },
   methods: {
+    loadProblemsView(){
+      var _this = this;
+      this.getRequest('/problems').then(resp=>{
+        window.console.log("yes");
+        _this.loading = false;
+        if(resp && resp.status == 200){
+          window.console.log("login --> problem " + resp.data.obj);
+
+        }else{
+          _this.$router.replace({path: '/login'});
+        }
+      });
+    },
     // todo
     handleClose(removeTag) {
       const tags = this.tags.filter(tag => tag !== removeTag);
