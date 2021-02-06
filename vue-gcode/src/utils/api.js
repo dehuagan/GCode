@@ -114,15 +114,13 @@ axios.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
-      if (error.response.status == 401) {
         sessionStorage.removeItem('token')
         router.replace({
           href: '/login',
           // query: {redirect: router.currentRoute.fullPath}
         })
-      } else {
-        next()
-      }
-      return Promise.reject(error.response.data)  // 返回接口返回的错误信息
+
+        return Promise.reject(error.response.data);// 返回接口返回的错误信息
+
     }
   })

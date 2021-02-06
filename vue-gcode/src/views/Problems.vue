@@ -6,10 +6,10 @@
         <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
           <div class="problem-category">
           <a-space :size="space_size">
-            <a-tag color="#359dc7">30/100 Solved</a-tag>
-            <a-tag color="#1DA57A">easy 30</a-tag>
-            <a-tag color="#f98b15">medium 40</a-tag>
-            <a-tag color="#f5222d">hard 30</a-tag>
+            <a-tag color="#359dc7">30/{{ totalNum }} Solved</a-tag>
+            <a-tag color="#1DA57A">easy {{ easyNum }}</a-tag>
+            <a-tag color="#f98b15">medium {{ mediumNum }}</a-tag>
+            <a-tag color="#f5222d">hard {{ hardNum }}</a-tag>
           </a-space>
           </div>
           <a-divider />
@@ -80,7 +80,7 @@
         <MyList></MyList>
         </a-layout-content>
         <a-layout-sider width="250" style="background: #fff;">
-          <Progress></Progress>
+          <Progress ></Progress>
 
         </a-layout-sider>
 
@@ -100,6 +100,10 @@ export default {
   },
   data() {
     return {
+      totalNum: 0,
+      easyNum: 0,
+      mediumNum: 0,
+      hardNum: 0,
       difficulty: [],
       status: [],
       problem_tags:[],
@@ -115,13 +119,18 @@ export default {
   methods: {
     loadProblemsView(){
       var _this = this;
-      this.getRequest('/problems').then(resp=>{
+      this.getRequest('/getNumOfProblems').then(resp=>{
         window.console.log("yes");
         _this.loading = false;
         if(resp && resp.status == 200){
+          this.totalNum = resp.data.obj.totalOfProblems;
+          this.easyNum = resp.data.obj.numOfEasy;
+          this.mediumNum = resp.data.obj.numOfMedium;
+          this.hardNum = resp.data.obj.numOfHard;
           window.console.log("login --> problem " + resp.data.obj);
 
-        }else{
+        }else if(resp.status == 500){
+          window.console.log("login expires");
           _this.$router.replace({path: '/login'});
         }
       });

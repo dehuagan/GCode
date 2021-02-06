@@ -5,9 +5,17 @@
       <a-button class="logo"><router-link to="/Problems"><a-icon></a-icon>hhh</router-link></a-button>
     <a-menu v-model="current" mode="horizontal" class="menu">
 <!--      <a-menu-item><a-button class="logo"><a-icon></a-icon>hhh</a-button></a-menu-item>-->
-        <a-menu-item key="problems"><router-link to="/Problems"> <a-icon type="appstore" />Problems </router-link></a-menu-item>
-        <a-menu-item key="ranking" ><router-link to="/Ranking"> <a-icon type="ordered-list" />Ranking</router-link> </a-menu-item>
-        <a-menu-item key="profile" ><router-link to="/Profile"> <a-icon type="user" />Profile</router-link> </a-menu-item>
+        <a-menu-item key="problems"><router-link to="/problems"> <a-icon type="appstore" />Problems </router-link></a-menu-item>
+        <a-menu-item key="ranking" ><router-link to="/ranking"> <a-icon type="ordered-list" />Ranking</router-link> </a-menu-item>
+
+      <a-sub-menu slot="">
+        <span slot="title"
+        ><a-icon type="setting" />Profile</span
+        >
+        <a-menu-item key="profile" ><router-link to="/profile"> <a-icon type="user" />Profile Detail</router-link> </a-menu-item>
+        <a-menu-item @click="toLogin"><a-icon type="poweroff" />Login out</a-menu-item>
+
+      </a-sub-menu>
     </a-menu>
 
     </div>
@@ -19,16 +27,20 @@ export default {
   name: "Header",
   data() {
     return {
-      cur_path: this.$route.path.substr(1).toLowerCase(),
+      cur_path: '',
       current: [],
     };
   },
-  beforeMount() {
+  mounted() {
     this.setCur();
   },
   methods:{
+    toLogin(){
+      this.$router.replace({path: '/login'});
+    },
     setCur(){
-      this.current.push(this.cur_path);
+      window.console.log(this.$route.path.split('/')[1]);
+      this.current.push(this.$route.path.split('/')[1]);
     }
   }
 };

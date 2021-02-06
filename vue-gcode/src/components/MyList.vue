@@ -1,37 +1,49 @@
 <template>
   <a-table
     :columns="columns"
-    :row-key="record => record.login.uuid"
+    :row-key="record => record.pid"
     :data-source="data"
     :pagination="pagination"
     :loading="loading"
+
     @change="handleTableChange"
+
   >
-    <template slot="name" slot-scope="name"> <router-link to="/problems/problemdetail"> {{ name.first }} {{ name.last }} </router-link></template>
+<!--    to="/problems/problemdetail"-->
+    <template slot="problem_title" slot-scope="text,record"> <a @click="gotoDetail(record)"> {{ text }}  </a></template>
+    <template slot="difficulty" slot-scope="text" ><div v-if="text==='Easy'" style="color: #1DA57A">{{text}}</div>
+      <div v-else-if="text==='Medium'" style="color: orange">{{text}}</div>
+      <div v-else style="color: red">{{text}}</div>
+    </template>
   </a-table>
 </template>
 <script>
-import reqwest from 'reqwest';
+// import reqwest from 'reqwest';
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    title: 'Solved'
+  },
+  {
+    title: '#',
+    dataIndex: 'pid',
     sorter: true,
-    width: '20%',
-    scopedSlots: { customRender: 'name' },
+    key: 'pid',
+    // width: '20%',
+    scopedSlots: { customRender: 'pid' },
   },
   {
-    title: 'Gender',
-    dataIndex: 'gender',
-    filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
-    ],
-    width: '20%',
+    title: 'Title',
+    dataIndex: 'title',
+    sorter: true,
+    key: 'title',
+    // width: '20%',
+    scopedSlots: { customRender: 'problem_title' },
   },
   {
-    title: 'Email',
-    dataIndex: 'email',
+    title: 'Difficulty',
+    key: 'difficulty',
+    dataIndex: 'difficulty',
+    scopedSlots: {customRender: 'difficulty'}
   },
 ];
 
@@ -39,7 +51,10 @@ export default {
   data() {
     return {
       data: [],
-      pagination: {},
+      pagination: {
+        'show-quick-jumper': true,
+        // '@change': "onChange"
+      },
       loading: false,
       columns,
     };
@@ -48,39 +63,64 @@ export default {
     this.fetch();
   },
   methods: {
+    gotoDetail(value){
+      window.console.log(value);
+      this.$router.push({path:'/problems/problemdetail', query:{pid: value.pid}});
+    },
     handleTableChange(pagination, filters, sorter) {
       console.log(pagination);
       const pager = { ...this.pagination };
       pager.current = pagination.current;
       this.pagination = pager;
-      this.fetch({
-        results: pagination.pageSize,
-        page: pagination.current,
-        sortField: sorter.field,
-        sortOrder: sorter.order,
-        ...filters,
-      });
+      // this.fetch({
+      //   results: pagination.pageSize,
+      //   page: pagination.current,
+      //   sortField: sorter.field,
+      //   sortOrder: sorter.order,
+      //   ...filters,
+      // });
+      this.fetch();
     },
-    fetch(params = {}) {
-      console.log('params:', params);
-      this.loading = true;
-      reqwest({
-        url: 'https://randomuser.me/api',
-        method: 'get',
-        data: {
-          results: 10,
-          ...params,
-        },
-        type: 'json',
-      }).then(data => {
-        const pagination = { ...this.pagination };
-        // Read total count from server
-        // pagination.total = data.totalCount;
-        pagination.total = 200;
-        this.loading = false;
-        this.data = data.results;
-        this.pagination = pagination;
+    fetch() {
+      this.getRequest('/getAllProblems',{
+        pageNum: this.pagination.current
+      }).then(resp=>{
+        this.loading = true;
+        if(resp && resp.status == 200){
+          this.loading = false;
+          const pagination = { ...this.pagination };
+          pagination.total = resp.data.obj.total;
+          pagination.pageSize = resp.data.obj.pageSize;
+          this.data = resp.data.obj.list;
+          window.console.log("data===>"+ this.data[0]);
+          this.pagination = pagination;
+        }
       });
+
+
+
+
+
+
+      // console.log('params:', params);
+      // this.loading = true;
+      // reqwest({
+      //   url: 'https://randomuser.me/api',
+      //   method: 'get',
+      //   data: {
+      //     results: 10,
+      //     ...params,
+      //   },
+      //   type: 'json',
+      // }).then(data => {
+      //   const pagination = { ...this.pagination };
+      //   // Read total count from server
+      //   // pagination.total = data.totalCount;
+      //   pagination.total = 200;
+      //   this.loading = false;
+      //   this.data = data.results;
+      //   this.pagination = pagination;
+      // });
     },
   },
 };
