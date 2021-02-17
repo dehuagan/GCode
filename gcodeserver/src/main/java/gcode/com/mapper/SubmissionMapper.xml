@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gcode.com.mapper.SubmissionMapper">
+    <resultMap id="SubmissionResultMap" type="gcode.com.model.Submission">
+        <result property="submissionId" column="submission_id"/>
+        <result property="submitTime" column="submit_time"/>
+        <result property="executeTime" column="execute_time"/>
+        <result property="usedTime" column="used_time"/>
+        <result property="usedMemory" column="used_memory"/>
+        <result property="code" column="submission_code"/>
+        <result property="result" column="submission_result"/>
+        <association property="problem"
+                     javaType="gcode.com.model.Problem"
+                     column="pid"
+                     select="gcode.com.mapper.ProblemMapper.getProblemDetailByPid"/>
+        <association property="user"
+                     javaType="gcode.com.model.User"
+                     column="uid"
+                     select="gcode.com.mapper.UserMapper.getUserByUid"/>
+        <association property="language"
+                     javaType="gcode.com.model.Language"
+                     column="language_id"
+                     select="gcode.com.mapper.LanguageMapper.getLanguageById"/>
+
+    </resultMap>
+    <insert id="createSubmission" parameterType="gcode.com.model.Submission" flushCache="true" keyProperty="submissionId" keyColumn="submission_id" useGeneratedKeys="true">
+        insert into submission (pid,uid,language_id,submission_code) values (#{problem.pid}, #{user.uid}, #{language.languageId}, #{code});
+    </insert>
+
+    <update id="updateSubmission" parameterType="gcode.com.model.Submission" flushCache="true">
+        update submission
+        set pid=#{problem.pid}, uid=#{user.uid}, language_id=#{language.languageId}, submit_time=#{submitTime}, execute_time=#{executeTime}, used_time=#{usedTime}, used_memor=#{usedMemory},submission_result=#{result}, submission_code=#{code}
+        where submission_id=#{submissionId}
+    </update>
+</mapper>

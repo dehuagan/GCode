@@ -4,7 +4,7 @@
 <!--    <a-layout id="components-layout-demo-top-side">-->
     <router-view></router-view>
 <!--    </a-layout>-->
-    <Footer></Footer>
+<!--    <Footer></Footer>-->
   </div>
 </template>
 
@@ -19,7 +19,8 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+
 #components-layout-demo-top-side{
   background-color: white;
   font-weight: bold;
@@ -27,4 +28,7 @@ export default {
 button{
   font-weight: bold;
 }
+/*.home{*/
+/*  height: 100%; padding: 0; box-sizing: border-box ; position: relative;*/
+/*}*/
 </style>

@@ -30,12 +30,12 @@ export default new Router({
           component: () =>
             import(/* webpackChunkName: "problems" */ "./views/Problems.vue")
         },
-        {
-          path: "/discussion",
-          name: "discussion",
-          component: () =>
-            import(/* webpackChunkName: "discussion" */ "./views/Discussion.vue")
-        },
+        // {
+        //   path: "/discussion",
+        //   name: "discussion",
+        //   component: () =>
+        //     import(/* webpackChunkName: "discussion" */ "./views/Discussion.vue")
+        // },
         {
           path: "/ranking",
           name: "ranking",
@@ -52,7 +52,22 @@ export default new Router({
           path: "/problems/problemdetail",
           name: "problemdetail",
           component: () =>
-            import(/* webpackChunkName: "problemdetail" */ "./views/ProblemDetail.vue")
+            import(/* webpackChunkName: "problemdetail" */ "./views/ProblemDetail.vue"),
+          children:[
+            {
+              path: "/problems/problemdetail/discussion",
+              name: "discussion",
+              component: () =>
+                import(/* webpackChunkName: "discussion" */ "./components/Discussion.vue")
+            },
+            {
+              path: "/problems/problemdetail/submissions",
+              name: "submissions",
+              component: () =>
+                import(/* webpackChunkName: "submissions" */ "./components/Submissions.vue")
+            }
+
+            ]
         }
       ]
     },

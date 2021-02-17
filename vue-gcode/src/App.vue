@@ -6,7 +6,6 @@
 
 <style lang="less">
 #app {
-  //width: 60%;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

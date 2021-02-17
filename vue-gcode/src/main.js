@@ -8,7 +8,7 @@ import {putRequest } from "./utils/api";
 import {deleteRequest } from "./utils/api";
 import md5 from 'js-md5';
 // import {CodeMirror} from 'vue-codemirror-lite'
-import { Button, Layout, Breadcrumb, Menu, Rate, Descriptions, Checkbox, Table, Modal, Upload, Form, Slider, Icon, Space, Card, Avatar, Progress, Badge, Drawer, Row, Col, Divider, Tabs, Select, Skeleton, Dropdown, List, Spin, Input, Tag } from "ant-design-vue"
+import { Button, Layout, Breadcrumb, Affix, Menu, Rate, Descriptions, Checkbox, Table, Modal, Upload, Form, Slider, Icon, Space, Card, Avatar, Progress, Badge, Drawer, Row, Col, Divider, Tabs, Select, Skeleton, Dropdown, List, Spin, Input, Tag } from "ant-design-vue"
 
 Vue.config.productionTip = false;
 Vue.prototype.getRequest = getRequest;
@@ -18,6 +18,7 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.$md5 = md5;
 
 // Vue.use(CodeMirror)
+Vue.use(Affix)
 Vue.use(Button)
 Vue.use(Input)
 Vue.use(Layout)

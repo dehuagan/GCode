@@ -28,7 +28,7 @@ public class User implements Serializable {
     /**
      * 完成题目数
      */
-    private int problem_count;
+//    private int problem_count;
 
     public long getUid() {
         return uid;
@@ -62,18 +62,18 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public int getProblem_count() {
-        return problem_count;
-    }
-
-    public void setProblem_count(int problem_count) {
-        this.problem_count = problem_count;
-    }
+//    public int getProblem_count() {
+//        return problem_count;
+//    }
+//
+//    public void setProblem_count(int problem_count) {
+//        this.problem_count = problem_count;
+//    }
 
     public User(String username, String password, String email, int problem_count) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.problem_count = problem_count;
+//        this.problem_count = problem_count;
     }
 }

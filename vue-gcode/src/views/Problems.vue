@@ -122,14 +122,14 @@ export default {
       this.getRequest('/getNumOfProblems').then(resp=>{
         window.console.log("yes");
         _this.loading = false;
-        if(resp && resp.status == 200){
+        if(resp && resp.data.status == 200){
           this.totalNum = resp.data.obj.totalOfProblems;
           this.easyNum = resp.data.obj.numOfEasy;
           this.mediumNum = resp.data.obj.numOfMedium;
           this.hardNum = resp.data.obj.numOfHard;
           window.console.log("login --> problem " + resp.data.obj);
 
-        }else if(resp.status == 500){
+        }else if(resp.data.status == 500){
           window.console.log("login expires");
           _this.$router.replace({path: '/login'});
         }
