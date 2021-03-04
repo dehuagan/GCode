@@ -36,7 +36,7 @@ public class JwtUtils {
      */
     public String createJwt(String id, String subject, Map<String, Object> map) {
 
-        //1、设置失效时间啊
+        //1、设置失效时间
         long now = System.currentTimeMillis();  //毫秒
         long exp = now + failureTime;
 

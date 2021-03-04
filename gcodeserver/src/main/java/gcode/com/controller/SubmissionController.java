@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Classname SubmissionController
@@ -33,7 +34,10 @@ public class SubmissionController {
     @PostMapping("/createSubmission")
     public RespBean createSubmission(@RequestParam(value = "uid") long uid, @RequestParam(value = "pid") long pid, @RequestParam(value = "languageSlug") String languageSlug, @RequestParam(value = "code") String code, HttpServletRequest request){
         if(isLogin(request)){
-
+            Map<String, Object> result = submissionService.createSubmission(uid,pid,languageSlug,code);
+            boolean successful = (Boolean)result.get("isSuccessful");
+            if(successful) return RespBean.ok("success",result);
+            else return RespBean.ok("unsuccess",result);
         }else{
             return RespBean.error("no login");
         }

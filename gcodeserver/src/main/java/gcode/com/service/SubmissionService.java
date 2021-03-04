@@ -4,6 +4,7 @@ import gcode.com.mapper.LanguageMapper;
 import gcode.com.mapper.ProblemMapper;
 import gcode.com.mapper.SubmissionMapper;
 import gcode.com.mapper.UserMapper;
+import gcode.com.messenger.MessageSender;
 import gcode.com.model.Language;
 import gcode.com.model.Problem;
 import gcode.com.model.Submission;
@@ -30,6 +31,9 @@ public class SubmissionService {
     ProblemMapper problemMapper;
 
     @Autowired
+    MessageSender messageSender;
+
+    @Autowired
     UserMapper userMapper;
 
     @Autowired
@@ -45,8 +49,10 @@ public class SubmissionService {
         if(isSuccessful){
             submissionMapper.createSubmission(submission);
             long submissionId = submission.getSubmissionId();
-
+            createSubmissionTask(submissionId);
+            result.put("submissionId",submissionId);
         }
+        return result;
     }
 
     private Map<String, ? extends Object> getSubmissionCreateResult(Submission submission) {
@@ -59,5 +65,12 @@ public class SubmissionService {
         boolean isSuccessful = result.get("isUerLogined") && result.get("isProblemExists") && result.get("isLanguageExists") && result.get("isCodeEmpty");
         result.put("isSuccessful",isSuccessful);
         return result;
+    }
+
+    public void createSubmissionTask(long submissionId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("event","SubmissionCreated");
+        map.put("submissionId",submissionId);
+        messageSender.sendMessage(map);
     }
 }
