@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gcode.com.mapper.TestCaseMapper">
+    <resultMap id="TestCaseResultMap"
+               type="gcode.com.model.TestCase">
+        <id property="testCaseId" column="testcase_id" />
+        <id property="pid" column="pid" />
+        <result property="input" column="input" />
+        <result property="output" column="output" />
+
+    </resultMap>
+
+    <select id="getTestCaseByPid" resultMap="TestCaseResultMap" useCache="true">
+        select *
+        from testcase
+        where pid = #{pid}
+    </select>
+</mapper>

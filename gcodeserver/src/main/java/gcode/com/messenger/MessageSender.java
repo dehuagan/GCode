@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
+
 /**
  * @Classname MessageSender
  * @Description TODO
@@ -16,7 +17,8 @@ public class MessageSender {
     @Autowired
     private JmsTemplate jmsTemplate;
     public void sendMessage(final Map<String,Object> mapMessage){
+        System.out.println("submissionid-----> "+mapMessage.get("submissionId"));
         long submissionId = (Long)mapMessage.get("submissionId");
-        jmsTemplate.convertAndSend(mapMessage);
+        jmsTemplate.convertAndSend("submission",mapMessage);
     }
 }

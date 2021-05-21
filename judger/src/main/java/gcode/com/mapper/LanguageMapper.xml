@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gcode.com.mapper.LanguageMapper">
+    <resultMap id="LanguageResultMap" type="gcode.com.model.Language">
+        <id property="languageId" column="language_id" />
+        <result property="languageSlug" column="language_slug" />
+        <result property="languageName" column="language_name" />
+        <result property="compileCommand" column="language_compile_command" />
+        <result property="runCommand" column="language_run_command" />
+    </resultMap>
+
+    <select id="getLanguageById"
+            parameterType="int"
+            resultMap="LanguageResultMap"
+            useCache="true">
+		SELECT *
+		FROM language
+		WHERE language_id = #{languageId}
+	</select>
+    <select id="getLanguageBySlug"
+            parameterType="String"
+            resultMap="LanguageResultMap"
+            useCache="true">
+		SELECT *
+		FROM language
+		WHERE language_slug = #{languageSlug}
+	</select>
+
+</mapper>

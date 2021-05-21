@@ -62,7 +62,7 @@ public class SubmissionService {
         result.put("isProblemExists", submission.getProblem() != null);
         result.put("isLanguageExists", submission.getLanguage() != null);
         result.put("isCodeEmpty", code == null || code.length() == 0);
-        boolean isSuccessful = result.get("isUerLogined") && result.get("isProblemExists") && result.get("isLanguageExists") && result.get("isCodeEmpty");
+        boolean isSuccessful = result.get("isUerLogined") && result.get("isProblemExists") && result.get("isLanguageExists") && !result.get("isCodeEmpty");
         result.put("isSuccessful",isSuccessful);
         return result;
     }

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gcode.com.mapper.ProblemMapper">
-    <resultMap id="ProblemMapper"
+    <resultMap id="ProblemResultMap"
                type="gcode.com.model.Problem">
         <id property="pid" column="pid" />
         <result property="title" column="title" />
@@ -13,12 +13,12 @@
         <result property="memory_limit" column="memory_limit"/>
     </resultMap>
 
-    <select id="selectPage" resultMap="ProblemMapper" useCache="true">
+    <select id="selectPage" resultMap="ProblemResultMap" useCache="true">
         select pid, title, difficulty
         from problem
     </select>
 
-    <select id="getProblemDetailByPid" parameterType="long" resultMap="ProblemMapper" useCache="true">
+    <select id="getProblemDetailByPid" parameterType="long" resultMap="ProblemResultMap" useCache="true">
         select *
         from problem
         where pid = #{pid}
