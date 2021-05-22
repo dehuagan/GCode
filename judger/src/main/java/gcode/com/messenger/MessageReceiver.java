@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
+import java.io.IOException;
 
 /**
  * @Classname MessageReceiver
@@ -19,18 +20,18 @@ public class MessageReceiver{
     @Autowired
     private ApplicationDispatcher dispatcher;
     @JmsListener(destination = "submission")
-    public void receiveQueue(MapMessage msg) throws JMSException, InterruptedException {
-        msg.acknowledge();
-        System.out.println("Consumer收到的消息为:" + msg.getLong("submissionId"));
-        System.out.println("Consumer收到的消息1为:" + msg.getString("event"));
-        String event = msg.getString("event");
+    public void receiveQueue(MapMessage msg) throws JMSException, InterruptedException, IOException {
+//        msg.acknowledge();
+        System.out.println("Consumer收到的消息为:" + msg.getObjectProperty("submissionId"));
+        System.out.println("Consumer收到的消息1为:" + msg.getObjectProperty("event"));
+        String event = String.valueOf(msg.getObjectProperty("event"));
         if(event.equals("SubmissionCreated")){
             newSubmissionHandler(msg);
         }
     }
 
-    private void newSubmissionHandler(MapMessage mapMessage) throws JMSException, InterruptedException {
-        long submissionId = mapMessage.getLong("submissionId");
+    private void newSubmissionHandler(MapMessage mapMessage) throws JMSException, InterruptedException, IOException {
+        long submissionId = (long)mapMessage.getObjectProperty("submissionId");
         dispatcher.onSubmissionCreated(submissionId);
     }
 
