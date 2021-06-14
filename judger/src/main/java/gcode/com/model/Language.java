@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class Language implements Serializable {
     private int languageId;
-    private String languageSlug;
+//    private String languageSlug;
     private String languageName;
     private String compileCommand;
     private String runCommand;
@@ -23,13 +23,13 @@ public class Language implements Serializable {
         this.languageId = languageId;
     }
 
-    public String getLanguageSlug() {
-        return languageSlug;
-    }
-
-    public void setLanguageSlug(String languageSlug) {
-        this.languageSlug = languageSlug;
-    }
+//    public String getLanguageSlug() {
+//        return languageSlug;
+//    }
+//
+//    public void setLanguageSlug(String languageSlug) {
+//        this.languageSlug = languageSlug;
+//    }
 
     public String getLanguageName() {
         return languageName;

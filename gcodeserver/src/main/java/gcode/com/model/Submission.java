@@ -19,8 +19,8 @@ public class Submission implements Serializable {
     private Language language;
     private Date submitTime;
     private Date executeTime;
-    private int usedTime;
-    private int usedMemory;
+    private float usedTime;
+    private float usedMemory;
     private String code;
     private String judgeResult;
 
@@ -79,19 +79,19 @@ public class Submission implements Serializable {
         this.executeTime = executeTime;
     }
 
-    public int getUsedTime() {
+    public float getUsedTime() {
         return usedTime;
     }
 
-    public void setUsedTime(int usedTime) {
+    public void setUsedTime(float usedTime) {
         this.usedTime = usedTime;
     }
 
-    public int getUsedMemory() {
+    public float getUsedMemory() {
         return usedMemory;
     }
 
-    public void setUsedMemory(int usedMemory) {
+    public void setUsedMemory(float usedMemory) {
         this.usedMemory = usedMemory;
     }
 

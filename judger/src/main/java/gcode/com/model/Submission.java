@@ -22,17 +22,25 @@ import java.util.Date;
  */
 public class Submission implements Serializable {
     private long submissionId;
-    private long problemId;
+    private long pid;
     private long uid;
 //    private User user;
     private Language language;
     private Date submitTime;
     private Date executeTime;
-    private int usedTime;
-    private int usedMemory;
+    private float usedTime;
+    private float usedMemory;
     private String code;
-    private String judgeResult;
+//    private String judgeResult;
+    private String result;
 
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 //    public Submission(User user, Problem problem, Language language,String code){
 //        this.user = user;
 //        this.problem = problem;
@@ -49,11 +57,11 @@ public class Submission implements Serializable {
     }
 
     public long getProblemId() {
-        return problemId;
+        return pid;
     }
 
-    public void setProblemId(long problemId) {
-        this.problemId = problemId;
+    public void setProblemId(long pid) {
+        this.pid = pid;
     }
 
     public long getUid() {
@@ -88,19 +96,19 @@ public class Submission implements Serializable {
         this.executeTime = executeTime;
     }
 
-    public int getUsedTime() {
+    public float getUsedTime() {
         return usedTime;
     }
 
-    public void setUsedTime(int usedTime) {
+    public void setUsedTime(float usedTime) {
         this.usedTime = usedTime;
     }
 
-    public int getUsedMemory() {
+    public float getUsedMemory() {
         return usedMemory;
     }
 
-    public void setUsedMemory(int usedMemory) {
+    public void setUsedMemory(float usedMemory) {
         this.usedMemory = usedMemory;
     }
 
@@ -112,12 +120,12 @@ public class Submission implements Serializable {
         this.code = code;
     }
 
-    public String getJudgeResult() {
-        return judgeResult;
-    }
-
-    public void setJudgeResult(String judgeResult) {
-        this.judgeResult = judgeResult;
-    }
+//    public String getJudgeResult() {
+//        return judgeResult;
+//    }
+//
+//    public void setJudgeResult(String judgeResult) {
+//        this.judgeResult = judgeResult;
+//    }
 }
 

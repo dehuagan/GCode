@@ -26,7 +26,7 @@
 
     </resultMap>
     <insert id="createSubmission" parameterType="gcode.com.model.Submission" flushCache="true" keyProperty="submissionId" keyColumn="submission_id" useGeneratedKeys="true">
-        insert into submission (pid,uid,language_id,submission_code) values (#{problem.pid}, #{user.uid}, #{language.languageId}, #{code});
+        insert into submission (pid,uid,language_id,submission_code,submit_time) values (#{problem.pid}, #{user.uid}, #{language.languageId}, #{code},#{submitTime});
     </insert>
 
     <update id="updateSubmission" parameterType="gcode.com.model.Submission" flushCache="true">

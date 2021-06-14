@@ -15,4 +15,5 @@ import org.springframework.stereotype.Component;
 public interface LanguageMapper {
     Language getLanguageById(int languageId);
     Language getLanguageBySlug(String languageSlug);
+    Language getLanguageByName(String name);
 }

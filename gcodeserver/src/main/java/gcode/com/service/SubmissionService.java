@@ -13,6 +13,7 @@ import javafx.scene.web.PromptData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,14 +40,15 @@ public class SubmissionService {
     @Autowired
     LanguageMapper languageMapper;
 
-    public Map<String, Object> createSubmission(long uid, long pid, String languageSlug, String code) {
+    public Map<String, Object> createSubmission(long uid, long pid, String languageName, String code) {
         User user = userMapper.getUserByUid(uid);
         Problem problem = problemMapper.getProblemDetailByPid(pid);
-        Language language = languageMapper.getLanguageBySlug(languageSlug);
+        Language language = languageMapper.getLanguageByName(languageName);
         Submission submission = new Submission(user, problem, language, code);
         Map<String,Object> result = (Map<String, Object>) getSubmissionCreateResult(submission);
         boolean isSuccessful = (Boolean)result.get("isSuccessful");
         if(isSuccessful){
+            submission.setSubmitTime(new Date());
             submissionMapper.createSubmission(submission);
             long submissionId = submission.getSubmissionId();
             createSubmissionTask(submissionId);

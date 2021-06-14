@@ -50,6 +50,24 @@ public class MessageSender {
     public void sendMessage(Map msg){
 //        System.out.println("submissionid-----> "+mapMessage.get("submissionId"));
 //        long submissionId = (Long)mapMessage.get("submissionId");
-        jmsTemplate.convertAndSend("fromJudger",msg);
+        ConnectionFactory connectionFactory = jmsMessagingTemplate.getConnectionFactory();
+        Session session = null;
+        try{
+            Connection connection = connectionFactory.createConnection();
+            session = connection.createSession(true,Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(session.createQueue("fromJudger"));
+            MapMessage mapMessage = session.createMapMessage();
+            mapMessage.setObjectProperty("message",msg);
+            producer.send(mapMessage);
+            session.commit();
+
+        } catch (JMSException e) {
+            e.printStackTrace();
+            try{
+                session.rollback();
+            } catch (JMSException jmsException) {
+                jmsException.printStackTrace();
+            }
+        }
     }
 }

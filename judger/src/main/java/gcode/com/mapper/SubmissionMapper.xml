@@ -22,12 +22,12 @@
     <select id="getSubmissionById" parameterType="long" resultMap="SubmissionResultMap" useCache="true">
         select *
         from submission
-        where submission_id = #{uid}
+        where submission_id = #{submissionId}
     </select>
 
     <update id="updateSubmission" parameterType="gcode.com.model.Submission" flushCache="true">
         update submission
-        set pid=#{problem.pid}, uid=#{user.uid}, language_id=#{language.languageId}, submit_time=#{submitTime}, execute_time=#{executeTime}, used_time=#{usedTime}, used_memor=#{usedMemory},submission_result=#{result}, submission_code=#{code}
+        set pid=#{pid}, uid=#{uid}, language_id=#{language.languageId}, submit_time=#{submitTime}, execute_time=#{executeTime}, used_time=#{usedTime}, used_memory=#{usedMemory},submission_result=#{result}, submission_code=#{code}
         where submission_id=#{submissionId}
     </update>
 </mapper>

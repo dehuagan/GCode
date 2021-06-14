@@ -5,19 +5,19 @@
 <mapper namespace="gcode.com.mapper.LanguageMapper">
     <resultMap id="LanguageResultMap" type="gcode.com.model.Language">
         <id property="languageId" column="language_id" />
-        <result property="languageSlug" column="language_slug" />
         <result property="languageName" column="language_name" />
         <result property="compileCommand" column="language_compile_command" />
         <result property="runCommand" column="language_run_command" />
     </resultMap>
 
-    <select id="getLanguageBySlug"
+
+    <select id="getLanguageByName"
             parameterType="String"
             resultMap="LanguageResultMap"
             useCache="true">
 		SELECT *
 		FROM language
-		WHERE language_slug = #{languageSlug}
+		WHERE language_name = #{languageName}
 	</select>
 
 </mapper>

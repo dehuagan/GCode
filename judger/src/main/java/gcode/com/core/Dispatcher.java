@@ -11,18 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Classname Dispatcher
  * @Description TODO
  * @Date 2021/5/20 上午9:43
  * @Created by gandehua
+ *
+ *
+ *
+ * todo: 除了java其他还没验证
  */
 @Component
 public class Dispatcher {
     static String projectDir = "/Users/gandehua/GCode/judger/src/main/java/gcode/com";
-    static String baseDir = "workspace";
+    static String baseDir = "src/main/java/gcode/com/workspace";
     @Autowired
     private ApplicationDispatcher applicationDispatcher;
 
@@ -43,18 +49,18 @@ public class Dispatcher {
                 System.out.println("illegal submission "+ submissionId);
                 return;
             }
-            String path = baseDir+"/"+submission.getSubmissionId();
+            String path = baseDir+"/s_"+submission.getSubmissionId();
             //生成对应判题目录
             String filename = preprocess(submission,path);
             //在目录下编译文件
             String msg = complie(submission,path);
-            if(msg!=null){
+            if(msg!=null&&msg.contains("error")){
                 applicationDispatcher.onErrorOccurred(submissionId,msg);
                 return;
             }
             ExecutorUtil.exec("chmod -R 755 " + path);
 
-            runProgram(submission,filename,path);
+            runProgram(submission,filename);
 
         }
 
@@ -90,7 +96,7 @@ public class Dispatcher {
         file.createNewFile();
         OutputStream output = new FileOutputStream(file);
         PrintWriter writer = new PrintWriter(output);
-        writer.print(submission.getCode());
+        writer.print("package gcode.com.workspace.s_"+submission.getSubmissionId()+";\n"+submission.getCode());
         writer.close();
         output.close();
         return filename;
@@ -119,26 +125,56 @@ public class Dispatcher {
         return ExecutorUtil.exec(cmd).getError();
     }
 
-    private void runProgram(Submission submission,String filename, String path) throws IOException {
+    private void runProgram(Submission submission,String filename) throws IOException {
 
         long submissionId = submission.getSubmissionId();
         long problemId = submission.getProblemId();
         List<TestCase> testCases = testCaseMapper.getTestCaseByPid(problemId);
-        for(TestCase testCase:testCases){
-            String cmd = getRunCmd(submission.getLanguage().getLanguageName(),path,testCase.getInput());
-            ExecMessage exec = ExecutorUtil.exec(cmd);
-            if(exec.getError()!=null){
 
+        /** 运行时间和内存*/
+        Runtime r = Runtime.getRuntime();
+        r.gc();
+        long startMem = r.freeMemory();
+        double startTime = System.currentTimeMillis();
+
+
+        for(TestCase testCase:testCases){
+            System.out.println("input===> "+testCase.getInput());
+            String cmd = getRunCmd(submission.getLanguage().getLanguageName(),submission.getSubmissionId());
+            ExecMessage exec = ExecutorUtil.exec(cmd+" "+testCase.getInput());
+            if(exec.getError()!=null){
+                //运行有错
+                applicationDispatcher.onErrorOccurred(submissionId,exec.getError());
+
+             }
+            if(!exec.getStdout().equals(testCase.getOutput())){
+                //当前testcase有错
+                applicationDispatcher.onTestCaseOccurred(submissionId, testCase.getInput(), testCase.getOutput(),exec.getStdout());
             }
+//            ExecMessage exec1 = ExecutorUtil.exec(testCase.getInput());
+
+            System.out.println("print===>   "+exec.getStdout());
+            System.out.println("print error===>   "+exec.getError());
+//            System.out.println("print dir===>   "+exec1.getStdout());
+//            System.out.println("print dir  error===>   "+exec1.getError());
         }
 
+        long endMem = r.freeMemory(); // 结束时的剩余内存
+        long usedMemory= startMem - endMem ;
+        double endTime = System.currentTimeMillis();
+        double usedTime= endTime - startTime ;
+
+        //todo 设置时间和内存限制
+
+        applicationDispatcher.onAllTestcaseAccepted(submissionId,(float)usedTime, (float)usedMemory,"Accepted");
 
     }
-    private String getRunCmd(String language, String path,String param){
+    private String getRunCmd(String language, long submissionId){
+        String path = "src/main/java";
         String cmd = "";
         switch (language){
             case "Java":
-                cmd = "java -cp " + path + "Main.java";
+                cmd = "java -cp " + path + "  gcode.com.workspace.s_"+submissionId+".Main";
                 break;
             case "C":
                 cmd = path + "/main";

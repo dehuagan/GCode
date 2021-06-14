@@ -36,22 +36,40 @@ public class ApplicationDispatcher {
 
     public void onErrorOccurred(long submissionId, String errorMsg){
         //todo
-        updateSubmission(submissionId, 0, 0, 0, "SE", errorMsg);
+        updateSubmission(submissionId, 0, 0, "SE", errorMsg);
         Map<String, Object> mapMsg = new HashMap<>();
-        mapMsg.put("event",errorMsg);
+        mapMsg.put("event","ErrorOccurred");
         mapMsg.put("submissionId",submissionId);
         messageSender.sendMessage(mapMsg);
     }
 
-    private void updateSubmission(long submissionId, int usedTime,
-                                  int usedMemory, int score, String judgeResult, String log) {
+    public void onTestCaseOccurred(long submissionId, String input, String expected, String output ){
+        String result = "Wrong Answer \n"+ "Input: "+input+"\nOUtput: "+output+"\nExpected: "+expected;
+        updateSubmission(submissionId,0,0,result, "");
+        Map<String, Object> mapMsg = new HashMap<>();
+        mapMsg.put("event","Wrong Answer");
+        mapMsg.put("submissionId",submissionId);
+        mapMsg.put("log", result);
+        messageSender.sendMessage(mapMsg);
+    }
+
+    public void onAllTestcaseAccepted(long submissionId, float usedTime, float usedMemory,  String msg){
+        updateSubmission(submissionId, usedTime, usedMemory,  msg,"");
+        Map<String, Object> mapMsg = new HashMap<>();
+        mapMsg.put("event","Accepted");
+        mapMsg.put("submissionId",submissionId);
+        messageSender.sendMessage(mapMsg);
+    }
+
+    private void updateSubmission(long submissionId, float usedTime,
+                                  float usedMemory, String judgeResult, String log) {
         Submission submission = submissionMapper.getSubmissionById(submissionId);
         submission.setExecuteTime(new Date());
         submission.setUsedTime(usedTime);
         submission.setUsedMemory(usedMemory);
-//        submission.setJudgeScore(score);
-//        submission.setJudgeResultSlug(judgeResult);
-//        submission.setJudgeLog(log);
+
+        submission.setResult(judgeResult);
+
 
         submissionMapper.updateSubmission(submission);
     }
