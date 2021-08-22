@@ -49,7 +49,7 @@ public class ApplicationEventListener {
             if(scheduler == null){
                 final int INITIAL_DELAY = 0;
                 final int PERIOD = 30;
-                scheduler = Executors.newScheduledThreadPool(1);
+                scheduler = new ScheduledThreadPoolExecutor(1);
                 scheduler.scheduleAtFixedRate(new Runnable() {
                     @Override
                     public void run() {
