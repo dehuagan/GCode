@@ -3,10 +3,10 @@ import java.util.Date;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @Classname KeepAliveEvent
- * @Description TODO
- * @Date 2021/3/3 下午9:23
- * @Created by gandehua
+ * @see KeepAliveEvent
+ *
+ * @date 2021/3/3 下午9:23
+ * @author gandehua
  */
 public class KeepAliveEvent extends ApplicationEvent{
     private final String judgeUsername;

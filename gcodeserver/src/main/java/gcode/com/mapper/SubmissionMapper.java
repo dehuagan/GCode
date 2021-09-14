@@ -4,10 +4,10 @@ import gcode.com.model.Submission;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Classname SubmissionMapper
- * @Description TODO
- * @Date 2021/2/15 下午10:33
- * @Created by gandehua
+ * @see SubmissionMapper
+ *
+ * @date 2021/2/15 下午10:33
+ * @author gandehua
  */
 @Mapper
 @Component

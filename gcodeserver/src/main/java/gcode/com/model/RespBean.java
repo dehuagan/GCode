@@ -1,10 +1,10 @@
 package gcode.com.model;
 
 /**
- * @Classname RespBean
- * @Description TODO
- * @Date 2021/1/31 下午7:20
- * @Created by gandehua
+ * @see RespBean
+ * 
+ * @date 2021/1/31 下午7:20
+ * @author gandehua
  */
 public class RespBean {
     private Integer status;

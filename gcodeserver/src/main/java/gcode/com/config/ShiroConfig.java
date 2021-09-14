@@ -10,10 +10,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @Classname ShiroConfig
- * @Description TODO
- * @Date 2021/2/1 下午3:05
- * @Created by gandehua
+ * @see ShiroConfig
+ * 
+ * @date 2021/2/1 下午3:05
+ * @author gandehua
  */
 
 @Configuration

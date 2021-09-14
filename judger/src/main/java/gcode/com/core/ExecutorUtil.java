@@ -6,10 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * @Classname ExecutorUtil
- * @Description TODO
- * @Date 2021/5/20 下午10:13
- * @Created by gandehua
+ * @see ExecutorUtil
+ *
+ * @date 2021/5/20 下午10:13
+ * @author gandehua
  */
 public class ExecutorUtil {
 

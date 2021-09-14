@@ -15,10 +15,10 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
- * @Classname ApplicationDispatcher
- * @Description TODO
- * @Date 2021/5/19 下午11:42
- * @Created by gandehua
+ * @see ApplicationDispatcher
+ *
+ * @date 2021/5/19 下午11:42
+ * @author gandehua
  */
 @Component
 public class ApplicationDispatcher {

@@ -10,10 +10,10 @@ import javax.jms.MapMessage;
 import java.io.IOException;
 
 /**
- * @Classname MessageReceiver
- * @Description TODO
- * @Date 2021/5/19 下午11:04
- * @Created by gandehua
+ * @see MessageReceiver
+ *
+ * @date 2021/5/19 下午11:04
+ * @author gandehua
  */
 @Component
 public class MessageReceiver{

@@ -18,10 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Classname SubmissionController
- * @Description TODO
- * @Date 2021/2/16 下午9:18
- * @Created by gandehua
+ * @see SubmissionController
+ *
+ * @date 2021/2/16 下午9:18
+ * @author gandehua
  */
 @RestController
 public class SubmissionController {

@@ -1,10 +1,10 @@
 package gcode.com.core;
 
 /**
- * @Classname ExecMessage
- * @Description TODO
- * @Date 2021/5/20 下午10:15
- * @Created by gandehua
+ * @see ExecMessage
+ *
+ * @date 2021/5/20 下午10:15
+ * @author gandehua
  */
 public class ExecMessage {
 

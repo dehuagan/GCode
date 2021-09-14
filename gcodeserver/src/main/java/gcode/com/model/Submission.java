@@ -7,10 +7,10 @@ import java.security.PrivateKey;
 import java.util.Date;
 
 /**
- * @Classname Submission
- * @Description TODO
- * @Date 2021/2/15 下午4:00
- * @Created by gandehua
+ * @see Submission
+ *
+ * @date 2021/2/15 下午4:00
+ * @author gandehua
  */
 public class Submission implements Serializable {
     private long submissionId;

@@ -3,10 +3,10 @@ package gcode.com.model;
 import java.io.Serializable;
 
 /**
- * @Classname Language
- * @Description TODO
- * @Date 2021/2/15 下午4:01
- * @Created by gandehua
+ * @see Language
+ *
+ * @date 2021/2/15 下午4:01
+ * @author gandehua
  */
 public class Language implements Serializable {
     private int languageId;

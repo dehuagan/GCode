@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Classname testController
- * @Description TODO
- * @Date 2021/5/20 上午12:01
- * @Created by gandehua
+ * @see testController
+ *
+ * @date 2021/5/20 上午12:01
+ * @author gandehua
  */
 @RestController
 public class testController {

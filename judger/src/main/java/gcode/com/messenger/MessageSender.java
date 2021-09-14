@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Classname MessageSender
- * @Description TODO
- * @Date 2021/5/19 下午11:55
- * @Created by gandehua
+ * @see MessageSender
+ *
+ * @date 2021/5/19 下午11:55
+ * @author gandehua
  */
 @Component
 public class MessageSender {

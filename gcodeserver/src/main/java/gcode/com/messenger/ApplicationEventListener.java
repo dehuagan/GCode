@@ -12,10 +12,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * @Classname ApplicationEventListener
- * @Description TODO
- * @Date 2021/3/3 下午2:46
- * @Created by gandehua
+ * @see ApplicationEventListener
+ *
+ * @date 2021/3/3 下午2:46
+ * @author gandehua
  */
 @Component
 public class ApplicationEventListener {

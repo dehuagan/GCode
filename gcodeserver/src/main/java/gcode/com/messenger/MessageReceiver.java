@@ -11,10 +11,10 @@ import javax.jms.TextMessage;
 import java.util.Map;
 
 /**
- * @Classname MessageReceiver
- * @Description TODO
- * @Date 2021/5/19 下午10:22
- * @Created by gandehua
+ * @see MessageReceiver
+ *
+ * @date 2021/5/19 下午10:22
+ * @author gandehua
  */
 @Component
 public class MessageReceiver{

@@ -5,10 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 /**
- * @Classname SubmissionMapper
- * @Description TODO
- * @Date 2021/5/20 下午7:49
- * @Created by gandehua
+ * @see SubmissionMapper
+ *
+ * @date 2021/5/20 下午7:49
+ * @author gandehua
  */
 @Mapper
 @Component

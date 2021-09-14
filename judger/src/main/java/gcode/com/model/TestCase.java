@@ -1,10 +1,10 @@
 package gcode.com.model;
 
 /**
- * @Classname TestCase
- * @Description TODO
- * @Date 2021/5/21 下午4:22
- * @Created by gandehua
+ * @see TestCase
+ *
+ * @date 2021/5/21 下午4:22
+ * @author gandehua
  */
 public class TestCase {
     long testCaseId;

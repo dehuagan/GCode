@@ -14,10 +14,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @Classname UserRealm
- * @Description TODO
- * @Date 2021/2/1 下午3:06
- * @Created by gandehua
+ * @see UserRealm
+ *
+ * @date 2021/2/1 下午3:06
+ * @author gandehua
  */
 public class UserRealm extends AuthorizingRealm {
 

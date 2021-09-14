@@ -3,10 +3,10 @@ package gcode.com.model;
 import java.io.Serializable;
 
 /**
- * @Classname Problem
- * @Description TODO
- * @Date 2021/2/6 下午3:11
- * @Created by gandehua
+ * @see Problem
+ *
+ * @date 2021/2/6 下午3:11
+ * @author gandehua
  */
 public class Problem implements Serializable {
     private long pid;

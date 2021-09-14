@@ -10,10 +10,10 @@ import javax.jms.*;
 
 
 /**
- * @Classname MessageSender
- * @Description TODO
- * @Date 2021/2/16 下午11:26
- * @Created by gandehua
+ * @see MessageSender
+ * 
+ * @date 2021/2/16 下午11:26
+ * @author gandehua
  */
 @Component
 public class MessageSender {

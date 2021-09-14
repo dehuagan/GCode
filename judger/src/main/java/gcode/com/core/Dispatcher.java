@@ -8,6 +8,7 @@ import gcode.com.model.Submission;
 import gcode.com.model.TestCase;
 import org.apache.logging.log4j.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Classname Dispatcher
- * @Description TODO
- * @Date 2021/5/20 上午9:43
- * @Created by gandehua
+ * @see Dispatcher
+ *
+ * @date 2021/5/20 上午9:43
+ * @author gandehua
  *
  *
  *
@@ -36,6 +37,8 @@ public class Dispatcher {
     private TestCaseMapper testCaseMapper;
     @Autowired
     SubmissionMapper submissionMapper;
+
+    @Async("judgeExecutor")
     public void createNewTask(long submissionId) throws InterruptedException, IOException {
         synchronized (this){
 //            String baseDirectory = String

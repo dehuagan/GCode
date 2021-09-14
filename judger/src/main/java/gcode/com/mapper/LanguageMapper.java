@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 /**
- * @Classname LanguageMapper
- * @Description TODO
- * @Date 2021/5/20 下午8:07
- * @Created by gandehua
+ * @see LanguageMapper
+ *
+ * @date 2021/5/20 下午8:07
+ * @author gandehua
  */
 @Mapper
 @Component

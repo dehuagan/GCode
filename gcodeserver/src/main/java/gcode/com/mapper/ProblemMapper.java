@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @Classname ProblemMapper
- * @Description TODO
- * @Date 2021/2/6 下午3:15
- * @Created by gandehua
+ * @see ProblemMapper
+ *
+ * @date 2021/2/6 下午3:15
+ * @author gandehua
  */
 @Mapper
 @Component

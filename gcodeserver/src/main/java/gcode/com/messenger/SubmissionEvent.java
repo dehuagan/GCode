@@ -3,10 +3,10 @@ package gcode.com.messenger;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @Classname SubmissionEvent
- * @Description TODO
- * @Date 2021/3/3 下午7:51
- * @Created by gandehua
+ * @see SubmissionEvent
+ *
+ * @date 2021/3/3 下午7:51
+ * @author gandehua
  */
 public class SubmissionEvent extends ApplicationEvent {
     private final long submissionId;
